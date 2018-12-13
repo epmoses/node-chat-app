@@ -8,11 +8,12 @@
     "start": "node server/server.js"
   },
   "engines": {
-    "node":"8.10.0"
+    "node": "8.10.0"
   },
   "author": "Emily Moses",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
   }
 }
