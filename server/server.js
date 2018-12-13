@@ -18,9 +18,10 @@ app.use(express.static(publicPath));
 // Socket.io setup
 io.on('connection', (socket) => {
     console.log('New user connected');
+
     socket.on('disconnect', () => {
         console.log('User was disconnected from server')
-    })
+    });
 });
 
 // Port
