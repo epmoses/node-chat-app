@@ -1,9 +1,11 @@
-// V5 - Broadcasting events/basic messaging system
-// emitting events to everyone except user
+// V6 - Message generator
+// create utils/message.js
+// Mocha/expect testing
 const path = require('path');
 const express = require('express');
 const http = require('http'); // built in node module
 const socketIO = require('socket.io');
+const {generateMessage} = require('./utils/message')
 const port = process.env.PORT || 3000;
 
 let app = express();
@@ -21,18 +23,9 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    // Challenge - emit 2 events when a user connects
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'Welcome to the chat app',
-        createdAt: new Date().getTime()
-    });
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat App!'));
 
-    socket.broadcast.emit('newMessage', {
-        from: 'Admin',
-        text: 'New user joined',
-        createdAt: new Date().getTime()
-    });
+    socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
 
     socket.on('createMessage', (message) => {
@@ -42,11 +35,7 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
         // io.emit emits event to every single connection
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        });
+        io.emit('newMessage', generateMessage(message.from, message.text));
         
         // broadcasting - sends to everyone EXCEPT the person who posted it
         // socket.broadcast.emit('newMessage', {
