@@ -1,4 +1,5 @@
 // V5 - Broadcasting events/basic messaging system
+// emitting events to everyone except user
 const path = require('path');
 const express = require('express');
 const http = require('http'); // built in node module
@@ -20,6 +21,20 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    // Challenge - emit 2 events when a user connects
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'New user joined',
+        createdAt: new Date().getTime()
+    });
+
+
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
     });
@@ -32,6 +47,16 @@ io.on('connection', (socket) => {
             text: message.text,
             createdAt: new Date().getTime()
         });
+        
+        // broadcasting - sends to everyone EXCEPT the person who posted it
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // });
+
+        // To test -can emit in console in browser: socket.emit('createMessage', {from: 'Emily', text: 'hi'});
+
     });
 
     socket.on('disconnect', () => {
