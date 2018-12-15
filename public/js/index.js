@@ -1,13 +1,10 @@
+// V5 - Broadcasting events/basic messaging system
 // Client side JS
 let socket = io();
 
 socket.on('connect', () => {
     console.log('Connected to server');
 
-    socket.emit('createMessage', {
-        from: 'Emily',
-        text: 'Yep, that workd for me.'
-    })
 });
 
 socket.on('disconnect', () => {

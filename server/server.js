@@ -1,3 +1,4 @@
+// V5 - Broadcasting events/basic messaging system
 const path = require('path');
 const express = require('express');
 const http = require('http'); // built in node module
@@ -19,14 +20,18 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.emit('newMessage', {
-        from: 'Jon',
-        text: 'See you then',
-        createdAt: 123123
-    })
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
+    });
 
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+        // io.emit emits event to every single connection
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
     });
 
     socket.on('disconnect', () => {
