@@ -1,1 +1,1 @@
-# A full chat application with front and back end
+# A Chat Application using Socket.io

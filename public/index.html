@@ -8,8 +8,17 @@
 </head>
 <body>
     <p>Welcome to the chat app</p>
+
+    <ol id="messages"></ol>
+
+    <form id="message-form" action="">
+        <input type="text" name="message" placeholder="Message">
+        <button>Send</button>
+    </form>
     <!-- External socket.io library -->
     <script src="/socket.io/socket.io.js"></script>
+    <!-- JQuery -->
+    <script src="/js/libs/jquery-3.3.1.min.js"></script>
     <!-- Client side JS -->
     <script src="/js/index.js"></script>
 </body>
