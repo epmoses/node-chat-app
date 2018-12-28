@@ -1,1 +1,1 @@
-# A Chat Application using Socket.io
+# A Chatroom Application using Socket.io
