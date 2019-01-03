@@ -1,4 +1,24 @@
+// Auto scroll
 let socket = io();
+
+function scrollToBottom() {
+    // Determine if we should scroll to bottom
+    // Selectors
+    let messages = jQuery('#messages');
+        // Selector for last list item
+    let newMessage = messages.children('li:last-child');
+    // Heights
+    let clientHeight = messages.prop('clientHeight');
+    let scrollTop = messages.prop('scrollTop');
+    let scrollHeight = messages.prop('scrollHeight');
+    let newMessageHeight = newMessage.innerHeight();
+    let lastMessageHeight = newMessage.prev().innerHeight();
+   
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
+        // Should scroll
+        messages.scrollTop(scrollHeight);
+    }
+}
 
 socket.on('connect', () => {
     console.log('Connected to server');
@@ -19,6 +39,7 @@ socket.on('newMessage', (message) => {
     });
 
     jQuery('#messages').append(html);
+    scrollToBottom();
 });
 
 socket.on('newLocationMessage', (message) => {
@@ -31,7 +52,8 @@ socket.on('newLocationMessage', (message) => {
     });
     
     jQuery('#messages').append(html);
-})
+    scrollToBottom();
+});
 
 // Form
 jQuery('#message-form').on('submit', (e) => {
