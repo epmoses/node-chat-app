@@ -1,11 +1,8 @@
-// Auto scroll
 let socket = io();
 
 function scrollToBottom() {
-    // Determine if we should scroll to bottom
     // Selectors
     let messages = jQuery('#messages');
-        // Selector for last list item
     let newMessage = messages.children('li:last-child');
     // Heights
     let clientHeight = messages.prop('clientHeight');

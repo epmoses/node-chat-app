@@ -1,4 +1,3 @@
-// Auto scrolling to most recent message
 const path = require('path');
 const express = require('express');
 const http = require('http');
