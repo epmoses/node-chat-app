@@ -1,3 +1,4 @@
+// Joining rooms
 let socket = io();
 
 function scrollToBottom() {
@@ -18,8 +19,19 @@ function scrollToBottom() {
 }
 
 socket.on('connect', () => {
-    console.log('Connected to server');
-
+    // When we start, join a room
+    let params = jQuery.deparam(window.location.search);
+    // Client to server
+    socket.emit('join', params, (err) => {
+        if(err) {
+            // Don't join room
+            alert(err);
+            window.location.href = '/';
+        } else {
+            // Join room
+            console.log('no error')
+        }
+    });
 });
 
 socket.on('disconnect', () => {
