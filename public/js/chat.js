@@ -1,4 +1,3 @@
-// Joining rooms
 let socket = io();
 
 function scrollToBottom() {
@@ -36,6 +35,17 @@ socket.on('connect', () => {
 
 socket.on('disconnect', () => {
     console.log('Disconnected from server')
+});
+
+// Updates User List
+socket.on('updateUserList', (users) => {
+    let ul = jQuery('<ul></ul>');
+    users.forEach((user) => {
+        ul.append(jQuery('<li></li>').text(user));
+    });
+
+    // Render to screen
+    jQuery('#users').html(ul);
 });
 
 socket.on('newMessage', (message) => {
