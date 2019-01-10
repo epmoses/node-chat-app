@@ -43,11 +43,10 @@ socket.on('updateUserList', (users) => {
     users.forEach((user) => {
         ul.append(jQuery('<li></li>').text(user));
     });
-
-    // Render to screen
     jQuery('#users').html(ul);
 });
 
+// Create Message Event
 socket.on('newMessage', (message) => {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = jQuery('#message-template').html();
@@ -81,7 +80,6 @@ jQuery('#message-form').on('submit', (e) => {
     let messageTextbox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-        from: 'User',
         text: messageTextbox.val()
     }, () => {
         messageTextbox.val('');
